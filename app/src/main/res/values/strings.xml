@@ -1,0 +1,62 @@
+<resources>
+    <string name="app_name">KunForOnad</string>
+    <string name="date">1. Дата отказа:</string>
+    <string name="data_hint">дд:мм:гггг</string>
+    <string name="stage">2. Этап:</string>
+    <string name="product">3 Изделие:</string>
+    <string name="series">Комплект:</string>
+    <string name="state_hint">Изделие</string>
+    <string name="series_hint">Комплект</string>
+    <string name="pribor">4 Прибор (блок):</string>
+    <string name="p_name">4.1 Наименование:</string>
+    <string name="pName_hint">Наименование</string>
+    <string name="p_oboz">4.2 Обозначение:</string>
+    <string name="pOboz_hint">Обозначение</string>
+    <string name="number">Зав.№</string>
+    <string name="block">5 Блок (субблок, ячейка):</string>
+    <string name="p_description">4.5 Признаки и проявление отказа:</string>
+    <string name="b_description">5.5 Признаки и проявление отказа:</string>
+    <string name="pos_description">6.1 Признаки и проявление отказа:</string>
+    <string name="b_name">5.1 Наименование:</string>
+    <string name="b_oboz">5.2 Обозначение:</string>
+    <string name="position">6. Место (позиция) отказа:</string>
+    <string name="deny_element">7. Отказавший элемент</string>
+    <string name="element_1">Элемент 1</string>
+    <string name="element_2">Элемент 2</string>
+    <string name="element_3">Элемент 3</string>
+    <string name="element_4">Элемент 4</string>
+    <string name="element_5">Элемент 5</string>
+    <string name="element_6">Элемент 6</string>
+    <string name="denyElementName">7.1 Наименование:</string>
+    <string name="denyElementType">7.2 Типономинал:</string>
+    <string name="analysis">7.6 Результаты анализа:</string>
+    <string name="reason">9. Причина отказа, неисправности:</string>
+    <string name="author">8. Фамилия заполнившего КУН:</string>
+    <string name="fault">10. Виновное предприятие (подразделение)</string>
+    <string name="typo">11. Вид отказа:</string>
+    <string name="todo">12. Мероприятия:</string>
+    <string name="chk_1">Заменен отказавший элемент</string>
+    <string name="chk_2">Составлен протокол анализа отказов №</string>
+    <string name="chk_3">Составлен акт исследования №</string>
+    <string name="save">Сохранить</string>
+    <string name="clear">Очистить</string>
+    <string-array name="states">
+        <item>СБН</item>
+        <item>БН</item>
+        <item>КН</item>
+        <item>ТП</item>
+        <item>ОТК</item>
+        <item>ПСИ</item>
+        <item>ШМ</item>
+        <item>Э</item>
+        <item>НГР</item>
+    </string-array>
+    <string-array name="deny_typo">
+        <item>ПКИ</item>
+        <item>ПР</item>
+        <item>Э</item>
+        <item>К</item>
+        <item>Т</item>
+    </string-array>
+
+</resources>

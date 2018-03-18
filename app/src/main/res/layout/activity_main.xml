@@ -1,0 +1,728 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ru.steeshock.kunforonad.MainActivity"
+    android:layout_marginRight="10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginTop="15dp">
+
+    <!--****************************************************************************************-->
+    <!--**************************START DESCRIPTION*************************-->
+    <!--****************************************************************************************-->
+
+    <LinearLayout
+        android:id="@+id/startLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:text="@string/date"
+            android:textStyle="bold|italic" />
+
+        <EditText
+            android:id="@+id/et_date"
+            android:textStyle="italic"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:hint="@string/data_hint"
+            android:inputType="datetime"
+            android:maxLength="50"
+            android:onClick="setDate"
+            android:textAlignment="center"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="15dp"
+            android:text="@string/stage"
+            android:textStyle="bold|italic" />
+
+        <Spinner
+            android:id="@+id/sp_state"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:entries="@array/states" />
+
+        <TextView
+            android:id="@+id/tv_product"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:text="@string/product"
+            android:textStyle="bold|italic" />
+
+        <EditText
+            android:id="@+id/et_state"
+            android:textStyle="italic"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="15dp"
+            android:layout_weight="1"
+            android:hint="@string/state_hint"
+            android:maxLines="1"
+            android:textAlignment="center"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_series"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:text="@string/series"
+            android:textStyle="bold|italic" />
+
+        <EditText
+            android:id="@+id/et_series"
+            android:textStyle="italic"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:maxLines="1"
+            android:textAlignment="center"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+
+    <!--****************************************************************************************-->
+    <!--**************************PRIBOR*************************-->
+    <!--****************************************************************************************-->
+
+
+    <LinearLayout
+        android:id="@+id/pLayoutDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp">
+
+        <TextView
+            android:id="@+id/tv_pribor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pribor"
+            android:textSize="24sp"
+            android:textStyle="bold|italic" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/pLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/tv_pName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="18dp"
+            android:text="@string/p_name"
+            android:textStyle="bold|italic" />
+
+        <EditText
+            android:id="@+id/et_pName"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="18dp"
+            android:hint="@string/pName_hint"
+            android:maxLines="1"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:textStyle="italic"/>
+
+        <TextView
+            android:id="@+id/tv_pOboz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="18dp"
+            android:text="@string/p_oboz"
+            android:textStyle="bold|italic" />
+
+        <EditText
+            android:id="@+id/et_pOboz"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="18dp"
+            android:hint="@string/pOboz_hint"
+            android:maxLines="1"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:textStyle="italic"/>
+
+        <TextView
+            android:id="@+id/tv_pNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="18dp"
+            android:text="@string/number"
+            android:textStyle="bold|italic" />
+
+        <EditText
+            android:id="@+id/et_pNumber"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="18dp"
+            android:maxLines="1"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:textStyle="italic"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_pDesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="@string/p_description"
+        android:textStyle="bold|italic" />
+
+    <EditText
+        android:id="@+id/et_pDesc"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:inputType="textMultiLine" />
+
+    <!--****************************************************************************************-->
+                  <!--**************************BLOCK*************************-->
+    <!--****************************************************************************************-->
+
+    <LinearLayout
+        android:id="@+id/bLayoutDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp">
+
+        <TextView
+            android:id="@+id/tv_block"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/block"
+            android:textSize="24sp"
+            android:textStyle="bold|italic" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/tv_bName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="18dp"
+            android:text="@string/b_name"
+            android:textStyle="bold|italic" />
+
+        <EditText
+            android:id="@+id/et_bName"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="18dp"
+            android:hint="@string/pName_hint"
+            android:maxLines="1"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:textStyle="italic"/>
+
+        <TextView
+            android:id="@+id/tv_bOboz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="18dp"
+            android:text="@string/b_oboz"
+            android:textStyle="bold|italic" />
+
+        <EditText
+            android:id="@+id/et_bOboz"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="18dp"
+            android:hint="@string/pOboz_hint"
+            android:maxLines="1"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:textStyle="italic"/>
+
+        <TextView
+            android:id="@+id/tv_bNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="18dp"
+            android:text="@string/number"
+            android:textStyle="bold|italic" />
+
+        <EditText
+            android:id="@+id/et_bNumber"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="18dp"
+            android:maxLines="1"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:textStyle="italic"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_bDesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="@string/b_description"
+        android:textStyle="bold|italic" />
+
+    <EditText
+        android:id="@+id/et_bDesc"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:inputType="textMultiLine" />
+
+
+    <!--****************************************************************************************-->
+    <!--**************************POSITION, DESCRIPTION*************************-->
+    <!--****************************************************************************************-->
+    <LinearLayout
+        android:id="@+id/posLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_position"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="18dp"
+            android:text="@string/position"
+            android:textStyle="bold|italic" />
+
+        <EditText
+            android:id="@+id/et_Position"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="18dp"
+            android:maxLines="1"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:textStyle="italic" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_positionDesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="@string/pos_description"
+        android:textStyle="bold|italic" />
+
+    <EditText
+        android:id="@+id/et_positionDesc"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:inputType="textMultiLine" />
+
+    <!--****************************************************************************************-->
+    <!--**************************ELEMENTS AND RESULTS*************************-->
+    <!--****************************************************************************************-->
+
+    <GridLayout
+        android:id="@+id/elementsLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:columnCount="5"
+        android:rowCount="5">
+
+        <TextView
+            android:id="@+id/tv_denyElement"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="18dp"
+            android:text="@string/deny_element"
+            android:textSize="14sp"
+            android:textStyle="bold|italic" />
+
+        <TextView
+            android:id="@+id/tv_element1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="15dp"
+            android:text="@string/element_1"
+            android:textSize="14sp"
+            android:textStyle="bold|italic" />
+
+        <TextView
+            android:id="@+id/tv_element2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="15dp"
+            android:text="@string/element_2"
+            android:textSize="14sp"
+            android:textStyle="bold|italic" />
+
+        <TextView
+            android:id="@+id/tv_element3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="15dp"
+            android:text="@string/element_3"
+            android:textSize="14sp"
+            android:textStyle="bold|italic" />
+
+        <TextView
+            android:id="@+id/tv_element4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="15dp"
+            android:text="@string/element_4"
+            android:textSize="14sp"
+            android:textStyle="bold|italic" />
+
+
+        <!--**************************NAME ROW*************************-->
+        <TextView
+            android:id="@+id/tv_denyElementName"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="18dp"
+            android:text="@string/denyElementName"
+            android:textSize="14sp"
+            android:textStyle="bold|italic" />
+
+        <EditText
+            android:id="@+id/et_el1_1"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_gravity="fill"
+            android:maxLines="1"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:textStyle="italic" />
+
+        <EditText
+            android:id="@+id/et_el2_1"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:layout_gravity="fill"
+            android:maxLines="1"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:textStyle="italic" />
+
+        <EditText
+            android:id="@+id/et_el3_1"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_column="3"
+            android:layout_gravity="fill"
+            android:maxLines="1"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:textStyle="italic" />
+
+        <EditText
+            android:id="@+id/et_el4_1"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_column="4"
+            android:layout_gravity="fill"
+            android:maxLines="1"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:textStyle="italic" />
+
+
+        <!--**************************TYPE ROW*************************-->
+        <TextView
+            android:id="@+id/tv_denyElementType"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="18dp"
+            android:text="@string/denyElementType"
+            android:textSize="14sp"
+            android:textStyle="bold|italic" />
+
+        <EditText
+            android:id="@+id/et_el1_2"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_gravity="fill"
+            android:maxLines="1"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:textStyle="italic" />
+
+        <EditText
+            android:id="@+id/et_el2_2"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:layout_gravity="fill"
+            android:maxLines="1"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:textStyle="italic" />
+
+        <EditText
+            android:id="@+id/et_el3_2"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_column="3"
+            android:layout_gravity="fill"
+            android:maxLines="1"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:textStyle="italic" />
+
+        <EditText
+            android:id="@+id/et_el4_2"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_column="4"
+            android:layout_gravity="fill"
+            android:maxLines="1"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:textStyle="italic" />
+
+    </GridLayout>
+
+    <!--****************************************************************************************-->
+    <!--**************************ANALYSIS RESULTS AND REASON*************************-->
+    <!--****************************************************************************************-->
+
+    <TextView
+        android:id="@+id/tv_analysisResult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="@string/analysis"
+        android:textStyle="bold|italic"
+        android:textSize="14sp"/>
+
+    <EditText
+        android:id="@+id/et_analysisResult"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:inputType="textMultiLine" />
+
+    <LinearLayout
+        android:id="@+id/kunAuthor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_author"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="18dp"
+            android:text="@string/author"
+            android:textStyle="bold|italic" />
+
+        <Spinner
+            android:id="@+id/sp_author"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="18dp"
+            android:maxLines="1"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:textStyle="italic" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_reason"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="@string/reason"
+        android:textStyle="bold|italic"
+        android:textSize="14sp"/>
+
+    <EditText
+        android:id="@+id/et_Reason"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:inputType="textMultiLine" />
+
+
+    <!--****************************************************************************************-->
+    <!--**************************CEX AND DENY TYPO*************************-->
+    <!--****************************************************************************************-->
+    <LinearLayout
+        android:id="@+id/faultLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_fault"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="18dp"
+            android:text="@string/fault"
+            android:textStyle="bold|italic" />
+
+        <EditText
+            android:id="@+id/et_Fault"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="18dp"
+            android:maxLines="1"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:textStyle="italic" />
+
+        <TextView
+            android:id="@+id/tv_denyTypo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="18dp"
+            android:text="@string/typo"
+            android:textStyle="bold|italic" />
+
+        <Spinner
+            android:id="@+id/sp_denyTypo"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:entries="@array/deny_typo"
+            />
+
+    </LinearLayout>
+    <!--****************************************************************************************-->
+    <!--**************************TO_DO*************************-->
+    <!--****************************************************************************************-->
+    <LinearLayout
+        android:id="@+id/todoLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp">
+
+        <TextView
+            android:id="@+id/tv_todo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/todo"
+            android:textSize="18sp"
+            android:textStyle="bold|italic" />
+
+    </LinearLayout>
+
+    <GridLayout
+        android:id="@+id/todoList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:columnCount="5"
+        android:rowCount="3">
+
+
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_marginEnd="15dp"
+            android:text="@string/chk_1" />
+
+        <CheckBox
+            android:id="@+id/checkBox2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_marginEnd="15dp"
+            android:text="@string/chk_2" />
+
+        <EditText
+            android:id="@+id/et_Protocol"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:inputType="number"
+            android:maxLines="1"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:textStyle="italic" />
+
+        <CheckBox
+            android:id="@+id/checkBox3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_marginEnd="15dp"
+            android:text="@string/chk_3" />
+
+        <EditText
+            android:id="@+id/et_Ai"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:inputType="number"
+            android:maxLines="1"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:textStyle="italic" />
+
+        <Button
+            android:id="@+id/save"
+            android:layout_column="3"
+            android:layout_row="1"
+            android:text="@string/save"
+            android:layout_marginEnd="20dp"/>
+        <Button
+            android:id="@+id/clear"
+            android:layout_column="4"
+            android:layout_row="1"
+            android:text="@string/clear"
+            android:layout_marginEnd="30dp"/>
+
+
+    </GridLayout>
+
+</LinearLayout>
+
+
+
