@@ -40,6 +40,7 @@
     <string name="chk_3">Составлен акт исследования №</string>
     <string name="save">Сохранить</string>
     <string name="clear">Очистить</string>
+    <string name="desc_hint">Введите признаки отказа</string>
     <string-array name="states">
         <item>СБН</item>
         <item>БН</item>

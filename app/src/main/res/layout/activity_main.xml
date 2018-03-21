@@ -50,7 +50,7 @@
             android:textStyle="bold|italic" />
 
         <Spinner
-            android:id="@+id/sp_state"
+            android:id="@+id/sp_stage"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:entries="@array/states" />
@@ -194,7 +194,10 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="15dp"
+        android:hint="@string/desc_hint"
         android:ems="10"
+        android:textSize="14sp"
+        android:textStyle="italic"
         android:inputType="textMultiLine" />
 
     <!--****************************************************************************************-->
@@ -296,6 +299,9 @@
         android:layout_height="40dp"
         android:layout_marginTop="15dp"
         android:ems="10"
+        android:textStyle="italic"
+        android:textSize="14sp"
+        android:hint="@string/desc_hint"
         android:inputType="textMultiLine" />
 
 
@@ -343,6 +349,9 @@
         android:layout_height="40dp"
         android:layout_marginTop="15dp"
         android:ems="10"
+        android:hint="@string/desc_hint"
+        android:textSize="14sp"
+        android:textStyle="italic"
         android:inputType="textMultiLine" />
 
     <!--****************************************************************************************-->
