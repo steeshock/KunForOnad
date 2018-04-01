@@ -41,6 +41,9 @@
     <string name="save">Сохранить</string>
     <string name="clear">Очистить</string>
     <string name="desc_hint">Введите признаки отказа</string>
+    <string name="open">Открыть</string>
+    <string name="login">Вход для ОНад</string>
+    <string name="photo_chkb">Фотография</string>
     <string-array name="states">
         <item>СБН</item>
         <item>БН</item>

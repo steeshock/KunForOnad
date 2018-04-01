@@ -1,16 +1,23 @@
 package ru.steeshock.kunforonad;
 
 import android.app.DatePickerDialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.DateUtils;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -25,6 +32,9 @@ public class MainActivity extends AppCompatActivity{
             et_analysisResult, et_Reason, et_Fault, et_Ai, et_Protocol;
 
     private KunRecord mKun = new KunRecord();
+
+    // создаем объект для создания и управления версиями БД
+    DBHelper dbHelper = new DBHelper (this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +83,7 @@ public class MainActivity extends AppCompatActivity{
     }
 
     // отображаем диалоговое окно для выбора даты
+
     public void setDate(View v) {
         new DatePickerDialog(MainActivity.this, d,
                 dateAndTime.get(Calendar.YEAR),
@@ -82,6 +93,7 @@ public class MainActivity extends AppCompatActivity{
     }
 
     // установка начальных даты и времени
+
     private void setInitialDateTime() {
         //String editTextDateParam = dateAndTime.get(Calendar.DAY_OF_MONTH) + "." + (dateAndTime.get(Calendar.MONTH) + 1) + "." + dateAndTime.get(Calendar.YEAR);
         //etDate.setText(editTextDateParam);
@@ -91,6 +103,7 @@ public class MainActivity extends AppCompatActivity{
                         | DateUtils.FORMAT_SHOW_TIME));
     }
     // установка обработчика выбора даты
+
     DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener() {
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
             dateAndTime.set(Calendar.YEAR, year);
@@ -101,6 +114,7 @@ public class MainActivity extends AppCompatActivity{
     };
 
     // очистка всех полей ввода
+
     View.OnClickListener mOnClearClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -126,27 +140,6 @@ public class MainActivity extends AppCompatActivity{
             alert.show();
         }
     };
-
-    // сохранения КУНа в БД
-    View.OnClickListener mOnSaveClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-
-            saveRecord();
-        }
-    };
-
-    public void saveRecord () {
-
-        mKun.date = et_Date.getText().toString();
-        mKun.stage = sp_stage.getSelectedItem().toString();
-        mKun.state = et_State.getText().toString();
-        mKun.series = et_Series.getText().toString();
-
-        et_pDesc.setText(mKun.toString());
-
-    }
-
     public void clearRecord () {
         et_State.getText().clear();
         et_Series.getText().clear();
@@ -176,4 +169,64 @@ public class MainActivity extends AppCompatActivity{
         et_Protocol.getText().clear();
     }
 
+    // сохранения КУНа в БД
+
+    View.OnClickListener mOnSaveClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+        saveRecord();
+
+        }
+    };
+
+    public void saveRecord () {
+
+        // создаем объект для данных
+        ContentValues cv = new ContentValues();
+
+        // получаем данные из полей ввода
+        String state = et_State.getText().toString();
+        String series = et_Series.getText().toString();
+
+        // подключаемся к БД
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        Log.d(dbHelper.LOG_TAG, "--- Insert in mytable: ---");
+        // подготовим данные для вставки в виде пар: наименование столбца - значение
+
+        cv.put("state", state);
+        cv.put("series", series);
+        // вставляем запись и получаем ее ID
+        long rowID = db.insert("mytable", null, cv);
+        Log.d(dbHelper.LOG_TAG, "row inserted, ID = " + rowID);
+
+        dbHelper.close();
+    }
+
+
+    //Создание меню
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.open_item:
+                Toast.makeText(this, R.string.open, Toast.LENGTH_SHORT).show();break;
+            case R.id.save_item:
+                saveRecord();
+                Toast.makeText(this, R.string.save, Toast.LENGTH_SHORT).show();break;
+            case R.id.login_item:
+                Toast.makeText(this, R.string.login, Toast.LENGTH_SHORT).show();break;
+            default: break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
