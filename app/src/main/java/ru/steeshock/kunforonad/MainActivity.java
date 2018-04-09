@@ -3,6 +3,8 @@ package ru.steeshock.kunforonad;
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -21,25 +23,26 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
 
     private Calendar dateAndTime = Calendar.getInstance();
 
-    private Spinner sp_stage;
-    private EditText et_Date, et_State, et_Series, et_pName, et_pOboz, et_pNumber, et_pDesc,
+    public Spinner sp_stage;
+    public EditText et_Date, et_State, et_Series, et_pName, et_pOboz, et_pNumber, et_pDesc,
             et_bName, et_bOboz, et_bNumber, et_bDesc, et_Position, et_positionDesc,
             et_el1_1, et_el2_1, et_el3_1, et_el4_1, et_el1_2, et_el2_2, et_el3_2, et_el4_2,
             et_analysisResult, et_Reason, et_Fault, et_Ai, et_Protocol;
 
-    private KunRecord mKun = new KunRecord();
-
     // создаем объект для создания и управления версиями БД
     DBHelper dbHelper = new DBHelper (this);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
              //INITIALIZING COMPONENTS//
 
@@ -75,8 +78,8 @@ public class MainActivity extends AppCompatActivity{
         Button btnClear = findViewById(R.id.clear);
         Button btnSave = findViewById(R.id.save);
 
-        btnClear.setOnClickListener(mOnClearClickListener);
-        btnSave.setOnClickListener(mOnSaveClickListener);
+        btnClear.setOnClickListener(this);
+        btnSave.setOnClickListener(this);
 
         setInitialDateTime();
 
@@ -95,13 +98,13 @@ public class MainActivity extends AppCompatActivity{
     // установка начальных даты и времени
 
     private void setInitialDateTime() {
-        //String editTextDateParam = dateAndTime.get(Calendar.DAY_OF_MONTH) + "." + (dateAndTime.get(Calendar.MONTH) + 1) + "." + dateAndTime.get(Calendar.YEAR);
+        //String editTextDateParam = dateAndTime.get(Calendar.DAY_OF_MONTH)
+        // + "." + (dateAndTime.get(Calendar.MONTH) + 1)
+        // + "." + dateAndTime.get(Calendar.YEAR);
         //etDate.setText(editTextDateParam);
-        et_Date.setText(DateUtils.formatDateTime(this,
-                dateAndTime.getTimeInMillis(),
-                DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR
-                        | DateUtils.FORMAT_SHOW_TIME));
+        et_Date.setText(formatDateAndTime(dateAndTime.getTimeInMillis()));
     }
+
     // установка обработчика выбора даты
 
     DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener() {
@@ -113,33 +116,45 @@ public class MainActivity extends AppCompatActivity{
         }
     };
 
-    // очистка всех полей ввода
+    // работа с кнопками
 
-    View.OnClickListener mOnClearClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-            builder.setTitle("Внимание!")
-                    .setMessage("Вся введенная информация будет удалена. Вы уверены?")
-                    .setCancelable(false)
-                    .setIcon(R.drawable.cancel)
-                    .setNegativeButton("ДА",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    clearRecord();
-                                }
-                            })
-                    .setPositiveButton("НЕТ",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                }
-                            });
 
-            AlertDialog alert = builder.create();
-            alert.show();
+            switch (v.getId()) {
+
+                case R.id.clear:
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    builder.setTitle("Внимание!")
+                            .setMessage("Вся введенная информация будет удалена. Вы уверены?")
+                            .setCancelable(false)
+                            .setIcon(R.drawable.cancel)
+                            .setNegativeButton("ДА",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            clearRecord();
+                                        }
+                                    })
+                            .setPositiveButton("НЕТ",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            dialog.cancel();
+                                        }
+                                    });
+
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                    break;
+
+                case R.id.save:
+                    saveRecord();
+                    break;
+            }
         }
-    };
+
+    // очистка записей
+
+
     public void clearRecord () {
         et_State.getText().clear();
         et_Series.getText().clear();
@@ -171,37 +186,50 @@ public class MainActivity extends AppCompatActivity{
 
     // сохранения КУНа в БД
 
-    View.OnClickListener mOnSaveClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-
-        saveRecord();
-
-        }
-    };
 
     public void saveRecord () {
+
+        Calendar currentDateAndTime = Calendar.getInstance();
 
         // создаем объект для данных
         ContentValues cv = new ContentValues();
 
         // получаем данные из полей ввода
+        Long date = currentDateAndTime.getTimeInMillis();
+        String readable_date = formatDateAndTime(currentDateAndTime.getTimeInMillis());
+        Long stage = sp_stage.getSelectedItemId();
+        String readable_stage = sp_stage.getSelectedItem().toString();
         String state = et_State.getText().toString();
         String series = et_Series.getText().toString();
+
+        Log.d(dbHelper.LOG_TAG, "TIME: " + date);
 
         // подключаемся к БД
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        Log.d(dbHelper.LOG_TAG, "--- Insert in mytable: ---");
         // подготовим данные для вставки в виде пар: наименование столбца - значение
 
+        cv.put("date", date);
+        cv.put("readable_date", readable_date);
+        cv.put("stage", stage);
+        cv.put("readable_stage", readable_stage);
         cv.put("state", state);
         cv.put("series", series);
+
         // вставляем запись и получаем ее ID
-        long rowID = db.insert("mytable", null, cv);
+        long rowID = db.insert("RecordsTable", null, cv);
         Log.d(dbHelper.LOG_TAG, "row inserted, ID = " + rowID);
 
         dbHelper.close();
+    }
+
+    // форматировать ДАТУ и ВРЕМЯ из МИЛИСЕКУНД в СТРОКУ
+    public String formatDateAndTime (Long d) {
+
+            return DateUtils.formatDateTime(this,
+                    d,
+                    DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR
+                            | DateUtils.FORMAT_SHOW_TIME);
     }
 
 
@@ -219,14 +247,22 @@ public class MainActivity extends AppCompatActivity{
 
         switch (item.getItemId()){
             case R.id.open_item:
-                Toast.makeText(this, R.string.open, Toast.LENGTH_SHORT).show();break;
+                Intent openShowRecords = new Intent(MainActivity.this, ShowRecords.class);
+                startActivity (openShowRecords);
+                Toast.makeText(this, R.string.open_bd, Toast.LENGTH_SHORT).show();break;
             case R.id.save_item:
                 saveRecord();
                 Toast.makeText(this, R.string.save, Toast.LENGTH_SHORT).show();break;
             case R.id.login_item:
                 Toast.makeText(this, R.string.login, Toast.LENGTH_SHORT).show();break;
+
             default: break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void fillTable () {
+
+
     }
 }

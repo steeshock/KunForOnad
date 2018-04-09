@@ -41,9 +41,20 @@
     <string name="save">Сохранить</string>
     <string name="clear">Очистить</string>
     <string name="desc_hint">Введите признаки отказа</string>
-    <string name="open">Открыть</string>
+    <string name="open_bd">Просмотр КУНов</string>
     <string name="login">Вход для ОНад</string>
     <string name="photo_chkb">Фотография</string>
+    <string name="title_number">Номер</string>
+    <string name="title_date">Дата отказа</string>
+    <string name="title_stage">Этап</string>
+    <string name="title_state">Изделие</string>
+    <string name="title_todo">Мероприятия</string>
+    <string name="title_type">Вид отказа</string>
+    <string name="delete_record">Удалить</string>
+    <string name="update_record">Изменить</string>
+    <string name="update">Обновить</string>
+    <string name="make_new_kun">Создать КУН</string>
+    <string name="update_table">Обновить таблицу</string>
     <string-array name="states">
         <item>СБН</item>
         <item>БН</item>

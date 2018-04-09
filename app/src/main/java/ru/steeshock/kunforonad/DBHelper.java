@@ -15,16 +15,24 @@ class DBHelper extends SQLiteOpenHelper {
 
     public DBHelper(Context context) {
         // конструктор суперкласса
-        super(context, "myDB", null, 1);
+        super(context, "myDataBase", null, 1);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         Log.d(LOG_TAG, "--- onCreate database ---");
         // создаем таблицу с полями
-        db.execSQL("create table mytable ("
-                + "id integer primary key autoincrement,"
+        db.execSQL("create table RecordsTable ("
+                + "_id integer primary key autoincrement,"
+                + "date integer,"
+                + "readable_date text,"
+                + "stage integer,"
+                + "readable_stage text,"
                 + "state text,"
+                + "series text" + ");");
+
+        db.execSQL("create table ElementsTable ("
+                + "_id integer primary key autoincrement,"
                 + "series text" + ");");
     }
 
