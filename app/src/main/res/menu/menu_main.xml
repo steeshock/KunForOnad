@@ -2,8 +2,8 @@
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="@string/open_bd" android:id="@+id/open_item"/>
+    <item android:title="@string/open_records" android:id="@+id/open_records_item"/>
+    <item android:title="@string/open_elements" android:id="@+id/open_elements_item"/>
     <item android:title="@string/save" android:id="@+id/save_item"/>
     <item android:title="@string/login" android:id="@+id/login_item" />
-    <item android:title="SHOW" android:id="@+id/show" />
 </menu>

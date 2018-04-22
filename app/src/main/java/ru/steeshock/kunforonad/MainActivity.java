@@ -4,11 +4,11 @@ import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -18,6 +18,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -28,11 +30,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private Calendar dateAndTime = Calendar.getInstance();
 
-    public Spinner sp_stage;
+    public Spinner sp_stage, sp_denyTypo;
     public EditText et_Date, et_State, et_Series, et_pName, et_pOboz, et_pNumber, et_pDesc,
-            et_bName, et_bOboz, et_bNumber, et_bDesc, et_Position, et_positionDesc,
+            et_bName, et_bOboz, et_bNumber, et_bDesc, et_Position, et_positionDesc, et_author,
             et_el1_1, et_el2_1, et_el3_1, et_el4_1, et_el1_2, et_el2_2, et_el3_2, et_el4_2,
-            et_analysisResult, et_Reason, et_Fault, et_Ai, et_Protocol;
+            et_analysisResult, et_reason, et_fault, et_ai, et_protocol;
+    public RadioGroup radioGroup;
+    public RadioButton checkedRadioButton;
 
     // создаем объект для создания и управления версиями БД
     DBHelper dbHelper = new DBHelper (this);
@@ -59,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         et_bDesc = findViewById(R.id.et_bDesc);
         et_Position = findViewById(R.id.et_Position);
         et_positionDesc = findViewById(R.id.et_positionDesc);
+        et_author = findViewById(R.id.et_author);
         et_el1_1 = findViewById(R.id.et_el1_1);
         et_el2_1 = findViewById(R.id.et_el2_1);
         et_el3_1 = findViewById(R.id.et_el3_1);
@@ -68,12 +73,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         et_el3_2 = findViewById(R.id.et_el3_2);
         et_el4_2 = findViewById(R.id.et_el4_2);
         et_analysisResult = findViewById(R.id.et_analysisResult);
-        et_Reason = findViewById(R.id.et_Reason);
-        et_Fault = findViewById(R.id.et_Fault);
-        et_Ai = findViewById(R.id.et_Ai);
-        et_Protocol = findViewById(R.id.et_Protocol);
+        et_reason = findViewById(R.id.et_Reason);
+        et_fault = findViewById(R.id.et_Fault);
+        et_ai = findViewById(R.id.et_Ai);
+        et_protocol = findViewById(R.id.et_Protocol);
 
         sp_stage = findViewById(R.id.sp_stage);
+        sp_denyTypo = findViewById(R.id.sp_denyTypo);
+
+        radioGroup = findViewById(R.id.rg);
+        radioGroup.check(R.id.rb1);
+
+        checkedRadioButton = findViewById(R.id.rb1);
+
+
 
         Button btnClear = findViewById(R.id.clear);
         Button btnSave = findViewById(R.id.save);
@@ -169,6 +182,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         et_bDesc.getText().clear();
         et_Position.getText().clear();
         et_positionDesc.getText().clear();
+        et_author.getText().clear();
         et_el1_1.getText().clear();
         et_el2_1.getText().clear();
         et_el3_1.getText().clear();
@@ -178,10 +192,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         et_el3_2.getText().clear();
         et_el4_2.getText().clear();
         et_analysisResult.getText().clear();
-        et_Reason.getText().clear();
-        et_Fault.getText().clear();
-        et_Ai.getText().clear();
-        et_Protocol.getText().clear();
+        et_reason.getText().clear();
+        et_fault.getText().clear();
+        et_ai.getText().clear();
+        et_protocol.getText().clear();
     }
 
     // сохранения КУНа в БД
@@ -189,38 +203,158 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void saveRecord () {
 
-        Calendar currentDateAndTime = Calendar.getInstance();
+        if (!isFieldsNotEmpty()) {
 
-        // создаем объект для данных
-        ContentValues cv = new ContentValues();
+            Calendar currentDateAndTime = Calendar.getInstance();
 
-        // получаем данные из полей ввода
-        Long date = currentDateAndTime.getTimeInMillis();
-        String readable_date = formatDateAndTime(currentDateAndTime.getTimeInMillis());
-        Long stage = sp_stage.getSelectedItemId();
-        String readable_stage = sp_stage.getSelectedItem().toString();
-        String state = et_State.getText().toString();
-        String series = et_Series.getText().toString();
+            // создаем объект для данных
+            ContentValues cv = new ContentValues();
 
-        Log.d(dbHelper.LOG_TAG, "TIME: " + date);
+            // получаем данные из полей ввода
+            Long date = currentDateAndTime.getTimeInMillis();
+            String readable_date = formatDateAndTime(currentDateAndTime.getTimeInMillis());
+            Long stage = sp_stage.getSelectedItemId();
+            String readable_stage = sp_stage.getSelectedItem().toString();
+            Long deny_Type = sp_denyTypo.getSelectedItemId();
+            String readable_deny_Type = sp_denyTypo.getSelectedItem().toString();
+            String state = et_State.getText().toString();
+            String series = et_Series.getText().toString();
 
-        // подключаемся к БД
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
+            //PRIBOR
+            String pName = et_pName.getText().toString();
+            String pOboz = et_pOboz.getText().toString();
+            String pNumber = et_pNumber.getText().toString();
+            String pDesc = et_pDesc.getText().toString();
 
-        // подготовим данные для вставки в виде пар: наименование столбца - значение
+            //BLOCK
+            String bName = et_bName.getText().toString();
+            String bOboz = et_bOboz.getText().toString();
+            String bNumber = et_bNumber.getText().toString();
+            String bDesc = et_bDesc.getText().toString();
 
-        cv.put("date", date);
-        cv.put("readable_date", readable_date);
-        cv.put("stage", stage);
-        cv.put("readable_stage", readable_stage);
-        cv.put("state", state);
-        cv.put("series", series);
+            //position
+            String position = et_Position.getText().toString();
+            String positionDesc = et_positionDesc.getText().toString();
 
-        // вставляем запись и получаем ее ID
-        long rowID = db.insert("RecordsTable", null, cv);
-        Log.d(dbHelper.LOG_TAG, "row inserted, ID = " + rowID);
+            //analys, author
+            String analysisResult = et_analysisResult.getText().toString();
+            String author = et_author.getText().toString();
 
-        dbHelper.close();
+            //reason, fault
+            String reason = et_reason.getText().toString();
+            String fault = et_fault.getText().toString();
+
+            //get number of ToDolist
+            Integer todo = radioGroup.getCheckedRadioButtonId();
+            checkedRadioButton = findViewById(todo);
+            String todo_desc = checkedRadioButton.getTransitionName() + " " + et_ai.getText().toString() + et_protocol.getText().toString();
+
+            //PA,AI
+            String ai = et_ai.getText().toString();
+            String protokol = et_protocol.getText().toString();
+
+            Log.d(dbHelper.LOG_TAG, "Radio Button ID: " + checkedRadioButton.getTransitionName());
+            //Log.d(dbHelper.LOG_TAG, "TIME: " + date);
+
+            // подключаемся к БД
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+            // подготовим данные для вставки в виде пар: наименование столбца - значение
+
+            cv.put("date", date);
+            cv.put("readable_date", readable_date);
+            cv.put("stage", stage);
+            cv.put("readable_stage", readable_stage);
+            cv.put("state", state);
+            cv.put("series", series);
+            cv.put("deny_Type", deny_Type);
+            cv.put("readable_deny_Type", readable_deny_Type);
+            cv.put("pName", pName);
+            cv.put("pOboz", pOboz);
+            cv.put("pNumber", pNumber);
+            cv.put("pDesc", pDesc);
+            cv.put("bName", bName);
+            cv.put("bOboz", bOboz);
+            cv.put("bNumber", bNumber);
+            cv.put("bDesc", bDesc);
+            cv.put("position", position);
+            cv.put("positionDesc", positionDesc);
+            cv.put("analysisResult", analysisResult);
+            cv.put("author", author);
+            cv.put("reason", reason);
+            cv.put("fault", fault);
+            cv.put("todo", todo);
+            cv.put("todo_desc", todo_desc);
+            cv.put("ai", ai);
+            cv.put("protokol", protokol);
+
+            // вставляем запись и получаем ее ID
+            long rowID = db.insert("RecordsTable", null, cv);
+            Log.d(dbHelper.LOG_TAG, "row inserted, ID = " + rowID);
+
+            Integer record_id = (int)rowID;  //ID КУНа, в который будем записывать элементы
+
+            //добавляем ЭЛЕМЕНТЫ в БД
+
+            ContentValues cv_elements = new ContentValues();
+
+            if (!TextUtils.isEmpty(et_el1_1.getText()))
+            {
+                String el_name = et_el1_1.getText().toString();
+                String el_extra = et_el1_2.getText().toString();
+
+                cv_elements.put("el_name", el_name);
+                cv_elements.put("el_extra", el_extra);
+                cv_elements.put("record_id", record_id);
+
+                long rowID_EL = db.insert("ElementsTable", null, cv_elements);
+                Log.d(dbHelper.LOG_TAG, "row inserted, ID = " + rowID_EL);
+            }
+
+            if (!TextUtils.isEmpty(et_el2_1.getText()))
+            {
+                String el_name = et_el2_1.getText().toString();
+                String el_extra = et_el2_2.getText().toString();
+
+                cv_elements.put("el_name", el_name);
+                cv_elements.put("el_extra", el_extra);
+                cv_elements.put("record_id", record_id);
+
+                long rowID_EL = db.insert("ElementsTable", null, cv_elements);
+                Log.d(dbHelper.LOG_TAG, "row inserted, ID = " + rowID_EL);
+            }
+
+            if (!TextUtils.isEmpty(et_el3_1.getText()))
+            {
+                String el_name = et_el3_1.getText().toString();
+                String el_extra = et_el3_2.getText().toString();
+
+                cv_elements.put("el_name", el_name);
+                cv_elements.put("el_extra", el_extra);
+                cv_elements.put("record_id", record_id);
+
+                long rowID_EL = db.insert("ElementsTable", null, cv_elements);
+                Log.d(dbHelper.LOG_TAG, "row inserted, ID = " + rowID_EL);
+            }
+
+            if (!TextUtils.isEmpty(et_el4_1.getText()))
+            {
+                String el_name = et_el4_1.getText().toString();
+                String el_extra = et_el4_2.getText().toString();
+
+                cv_elements.put("el_name", el_name);
+                cv_elements.put("el_extra", el_extra);
+                cv_elements.put("record_id", record_id);
+
+                long rowID_EL = db.insert("ElementsTable", null, cv_elements);
+                Log.d(dbHelper.LOG_TAG, "row inserted, ID = " + rowID_EL);
+            }
+
+            dbHelper.close();
+
+        } else {
+            showFieldsIsEmptyAlertDialog();
+        }
     }
 
     // форматировать ДАТУ и ВРЕМЯ из МИЛИСЕКУНД в СТРОКУ
@@ -246,10 +380,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()){
-            case R.id.open_item:
+            case R.id.open_records_item:
                 Intent openShowRecords = new Intent(MainActivity.this, ShowRecords.class);
                 startActivity (openShowRecords);
-                Toast.makeText(this, R.string.open_bd, Toast.LENGTH_SHORT).show();break;
+                Toast.makeText(this, R.string.open_records, Toast.LENGTH_SHORT).show();break;
+            case R.id.open_elements_item:
+                Intent openShowElements = new Intent(MainActivity.this, ShowElements.class);
+                startActivity (openShowElements);
+                Toast.makeText(this, R.string.open_elements, Toast.LENGTH_SHORT).show();break;
             case R.id.save_item:
                 saveRecord();
                 Toast.makeText(this, R.string.save, Toast.LENGTH_SHORT).show();break;
@@ -262,6 +400,52 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void fillTable () {
+
+        // заполнить таблицу тестовыми записями
+
+    }
+
+    public boolean isFieldsNotEmpty () {
+
+        boolean flag = true;
+
+        if(TextUtils.isEmpty(et_State.getText())){et_State.setError("введите данные"); flag = false;}
+        if(TextUtils.isEmpty(et_Series.getText())){et_Series.setError("введите данные"); flag = false;}
+        if(TextUtils.isEmpty(et_pName.getText())){et_pName.setError("введите данные"); flag = false;}
+        if(TextUtils.isEmpty(et_pOboz.getText())){et_pOboz.setError("введите данные"); flag = false;}
+        if(TextUtils.isEmpty(et_pNumber.getText())){et_pNumber.setError("введите данные"); flag = false;}
+        if(TextUtils.isEmpty(et_pDesc.getText())){et_pDesc.setError("введите данные"); flag = false;}
+        if(TextUtils.isEmpty(et_bName.getText())){et_bName.setError("введите данные"); flag = false;}
+        if(TextUtils.isEmpty(et_bOboz.getText())){et_bOboz.setError("введите данные"); flag = false;}
+        if(TextUtils.isEmpty(et_bNumber.getText())){et_bNumber.setError("введите данные"); flag = false;}
+        if(TextUtils.isEmpty(et_bDesc.getText())){et_bDesc.setError("введите данные"); flag = false;}
+        if(TextUtils.isEmpty(et_Position.getText())){et_Position.setError("введите данные"); flag = false;}
+        if(TextUtils.isEmpty(et_positionDesc.getText())){et_positionDesc.setError("введите данные"); flag = false;}
+        if(TextUtils.isEmpty(et_analysisResult.getText())){et_analysisResult.setError("введите данные"); flag = false;}
+        if(TextUtils.isEmpty(et_author.getText())){et_author.setError("введите данные"); flag = false;}
+        if(TextUtils.isEmpty(et_reason.getText())){et_reason.setError("введите данные"); flag = false;}
+        if(TextUtils.isEmpty(et_fault.getText())){et_fault.setError("введите данные"); flag = false;}
+
+        return flag;
+    }
+
+    public  void showFieldsIsEmptyAlertDialog () {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Внимание!")
+                .setMessage("Не все поля заполнены! Пожалуйста, заполните указанные поля.")
+                .setCancelable(false)
+                .setIcon(R.drawable.warning)
+                .setPositiveButton("ОК",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+
 
 
     }

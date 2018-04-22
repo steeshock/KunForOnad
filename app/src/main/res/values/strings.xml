@@ -28,7 +28,7 @@
     <string name="element_5">Элемент 5</string>
     <string name="element_6">Элемент 6</string>
     <string name="denyElementName">7.1 Наименование:</string>
-    <string name="denyElementType">7.2 Типономинал:</string>
+    <string name="denyElementType">7.2 Доп. информация:</string>
     <string name="analysis">7.6 Результаты анализа:</string>
     <string name="reason">9. Причина отказа, неисправности:</string>
     <string name="author">8. Фамилия заполнившего КУН:</string>
@@ -41,7 +41,8 @@
     <string name="save">Сохранить</string>
     <string name="clear">Очистить</string>
     <string name="desc_hint">Введите признаки отказа</string>
-    <string name="open_bd">Просмотр КУНов</string>
+    <string name="open_records">Просмотр КУНов</string>
+    <string name="open_elements">Просмотр элементов</string>
     <string name="login">Вход для ОНад</string>
     <string name="photo_chkb">Фотография</string>
     <string name="title_number">Номер</string>
@@ -55,6 +56,13 @@
     <string name="update">Обновить</string>
     <string name="make_new_kun">Создать КУН</string>
     <string name="update_table">Обновить таблицу</string>
+    <string name="summary_records">Общее количество КУНов в базе данных:</string>
+    <string name="summary_elements">Общее количество  отказавших элементов в базе данных:</string>
+    <string name="analysis_hint">Введите результаты анализа</string>
+    <string name="reason_hint">Введите причину отказа</string>
+    <string name="element_name">Наименование</string>
+    <string name="extra">Стоимость</string>
+    <string name="kun_number">Номер КУНа</string>
     <string-array name="states">
         <item>СБН</item>
         <item>БН</item>

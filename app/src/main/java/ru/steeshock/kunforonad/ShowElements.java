@@ -15,22 +15,21 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 /**
  * Created by steeshock on 01.04.2018.
  */
 
-public class ShowRecords extends AppCompatActivity {
+public class ShowElements extends AppCompatActivity {
 
 
     private static final int CM_UPDATE_ID = 1;
     private static final int CM_DELETE_ID = 2;
 
 
-    String[] from = new String[] {"_id", "readable_date", "state", "readable_stage", "readable_deny_Type", "todo_desc" };
-    int[] to = new int[] { R.id.tvID, R.id.tvDate, R.id.tvState, R.id.tvStage, R.id.tvType, R.id.tvTodo };
+    String[] from = new String[] {"_id", "el_name", "el_extra", "record_id"};
+    int[] to = new int[] { R.id.tvID, R.id.tvName, R.id.tvExtra, R.id.tvRecordID };
 
 
     TextView tv_summary;
@@ -44,16 +43,16 @@ public class ShowRecords extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.show_records);
+        setContentView(R.layout.show_elements);
 
         db = dbHelper.getWritableDatabase();
-        c = db.query("RecordsTable", null, null, null, null, null, null);
+        c = db.query("ElementsTable", null, null, null, null, null, null);
 
         tv_summary = findViewById(R.id.tv_summary);
         tv_summary.setText(String.valueOf(c.getCount()));
 
 
-        scAdapter = new SimpleCursorAdapter(this, R.layout.item_record, c, from, to,0);
+        scAdapter = new SimpleCursorAdapter(this, R.layout.item_element, c, from, to,0);
         list = findViewById(R.id.list);
         list.setAdapter(scAdapter);
 
@@ -77,11 +76,10 @@ public class ShowRecords extends AppCompatActivity {
 
                case CM_DELETE_ID:
 
-                   // также удаляем связанные с КУНом элементы
-                   db.delete("ElementsTable", "record_id" + " = " + acmi.id, null);
-
                    // извлекаем id записи и удаляем соответствующую запись в БД
                    db.delete("RecordsTable", "_id" + " = " + acmi.id, null);
+
+
 
                    c = db.query("RecordsTable", null, null, null, null, null, null);
                    scAdapter = new SimpleCursorAdapter(this, R.layout.item_record, c, from, to, 0);
@@ -119,7 +117,7 @@ public class ShowRecords extends AppCompatActivity {
                    record.putString(UpdateRecords.AI, c.getString(c.getColumnIndex("ai")));
                    record.putString(UpdateRecords.PROTOKOL, c.getString(c.getColumnIndex("protokol")));
 
-                   Intent openUpdateRecords = new Intent(ShowRecords.this, UpdateRecords.class);
+                   Intent openUpdateRecords = new Intent(ShowElements.this, UpdateRecords.class);
                    openUpdateRecords.putExtras(record);
                    startActivity (openUpdateRecords);
                    finish();
@@ -139,15 +137,10 @@ public class ShowRecords extends AppCompatActivity {
 
         switch (item.getItemId()){
             case R.id.new_item:
-                Intent openCreateNewRecord = new Intent(ShowRecords.this, MainActivity.class);
+                Intent openCreateNewRecord = new Intent(ShowElements.this, MainActivity.class);
                 startActivity (openCreateNewRecord);
                 finish();
                 break;
-
-            case R.id.show_elements:
-                Intent openShowElements = new Intent(ShowRecords.this, ShowElements.class);
-                startActivity (openShowElements);
-                Toast.makeText(this, R.string.open_elements, Toast.LENGTH_SHORT).show();break;
 
             case R.id.update_item:
 

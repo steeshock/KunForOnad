@@ -570,6 +570,9 @@
         android:layout_height="50dp"
         android:layout_marginTop="15dp"
         android:ems="10"
+        android:textStyle="italic"
+        android:hint="@string/analysis_hint"
+        android:textSize="14sp"
         android:inputType="textMultiLine" />
 
     <LinearLayout
@@ -587,8 +590,8 @@
             android:text="@string/author"
             android:textStyle="bold|italic" />
 
-        <Spinner
-            android:id="@+id/sp_author"
+        <EditText
+            android:id="@+id/et_author"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="18dp"
@@ -603,7 +606,7 @@
         android:id="@+id/tv_reason"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         android:text="@string/reason"
         android:textStyle="bold|italic"
         android:textSize="14sp"/>
@@ -612,8 +615,11 @@
         android:id="@+id/et_Reason"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         android:ems="10"
+        android:textStyle="italic"
+        android:hint="@string/reason_hint"
+        android:textSize="14sp"
         android:inputType="textMultiLine" />
 
 
@@ -681,70 +687,101 @@
 
     </LinearLayout>
 
-    <GridLayout
+    <android.support.constraint.ConstraintLayout
         android:id="@+id/todoList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="match_parent">
 
-        android:columnCount="5"
-        android:rowCount="3">
-
-
-        <CheckBox
-            android:id="@+id/checkBox"
+        <RadioGroup
+            android:id="@+id/rg"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="0"
-            android:layout_marginEnd="15dp"
-            android:text="@string/chk_1" />
+            android:layout_height="wrap_content">
 
-        <CheckBox
-            android:id="@+id/checkBox2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="0"
-            android:layout_marginEnd="15dp"
-            android:text="@string/chk_2" />
+
+            <RadioButton
+                android:id="@+id/rb1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="15dp"
+                android:text="@string/chk_1"
+                android:transitionName="Замена элементов" />
+
+            <RadioButton
+                android:id="@+id/rb2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="5dp"
+
+                android:layout_marginTop="5dp"
+                android:text="@string/chk_2"
+                android:transitionName="ПА" />
+
+            <RadioButton
+                android:id="@+id/rb3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="15dp"
+                android:text="@string/chk_3"
+                android:transitionName="АИ" />
+
+        </RadioGroup>
+
 
         <EditText
             android:id="@+id/et_Protocol"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_column="1"
-            android:inputType="number"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="28dp"
             android:maxLines="1"
             android:textAlignment="center"
             android:textSize="14sp"
-            android:textStyle="italic" />
+            android:textStyle="italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/rg"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <CheckBox
-            android:id="@+id/checkBox3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="0"
-            android:layout_marginEnd="15dp"
-            android:text="@string/chk_3" />
 
         <EditText
             android:id="@+id/et_Ai"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_column="1"
-            android:inputType="number"
+            android:layout_marginBottom="28dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:maxLines="1"
             android:textAlignment="center"
             android:textSize="14sp"
-            android:textStyle="italic" />
+            android:textStyle="italic"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_Protocol" />
+
 
         <Button
             android:id="@+id/update"
-            android:layout_column="4"
-            android:layout_marginEnd="80dp"
-            android:layout_row="1"
-            android:text="@string/update" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/update"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.842"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
-    </GridLayout>
+
+
+    </android.support.constraint.ConstraintLayout>
+
 
 </LinearLayout>
 

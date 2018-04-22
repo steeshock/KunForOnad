@@ -20,8 +20,13 @@ class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+
+
+        db.execSQL("PRAGMA foreign_keys = 0");
+
         Log.d(LOG_TAG, "--- onCreate database ---");
         // создаем таблицу с полями
+
         db.execSQL("create table RecordsTable ("
                 + "_id integer primary key autoincrement,"
                 + "date integer,"
@@ -29,11 +34,34 @@ class DBHelper extends SQLiteOpenHelper {
                 + "stage integer,"
                 + "readable_stage text,"
                 + "state text,"
+                + "deny_Type integer,"
+                + "readable_deny_Type text,"
+                + "pName text,"
+                + "pOboz text,"
+                + "pNumber text,"
+                + "pDesc text,"
+                + "bName text,"
+                + "bOboz text,"
+                + "bNumber text,"
+                + "bDesc text,"
+                + "position text,"
+                + "positionDesc text,"
+                + "analysisResult text,"
+                + "author text,"
+                + "reason text,"
+                + "fault text,"
+                + "todo integer,"
+                + "todo_desc text,"
+                + "ai text,"
+                + "protokol text,"
                 + "series text" + ");");
 
         db.execSQL("create table ElementsTable ("
                 + "_id integer primary key autoincrement,"
-                + "series text" + ");");
+                + "record_id integer,"
+                + "el_name text,"
+                + "el_extra text,"
+                + "FOREIGN KEY (record_id) REFERENCES RecordsTable(_id)" + ");");
     }
 
     @Override
